@@ -8,6 +8,28 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://abdallah2799.github.io/ReDone-Tasks/Styles/stylesheet-Slide-Show.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="line"></div>
+            <h1><span>Slide Show</span> Page<h1>
+        </div>
+
+        <div class="show">
+            <img src="https://abdallah2799.github.io/ReDone-Tasks/photos/numbers/0.jpg" id="slide" alt="Slide image" />
+        </div>
+
+        <div class="controls">
+            <input type="button" class="direction" value="&#10094;" onclick="prev()" />
+            <input type="button" class="start" value="Play" onclick="start()" />
+            <input type="button" class="stop" value="Stop" onclick="end()" />
+            <input type="button" class="direction" value="&#10095;" onclick="next()" />
+            <input type="number" name="tInterval" id="t" placeholder="Set Interval">
+        </div>
+    </div>
+    </div>
     <script>
         var imagesarr = [];
         for (let index = 0; index < 11; index++) {
@@ -43,28 +65,6 @@
 
         }
     </script>
-</head>
-
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="line"></div>
-            <h1><span>Slide Show</span> Page<h1>
-        </div>
-
-        <div class="show">
-            <img src="https://abdallah2799.github.io/ReDone-Tasks/photos/numbers/0.jpg" id="slide" alt="Slide image" />
-        </div>
-
-        <div class="controls">
-            <input type="button" class="direction" value="&#10094;" onclick="prev()" />
-            <input type="button" class="start" value="Play" onclick="start()" />
-            <input type="button" class="stop" value="Stop" onclick="end()" />
-            <input type="button" class="direction" value="&#10095;" onclick="next()" />
-            <input type="number" name="tInterval" id="t" placeholder="Set Interval">
-        </div>
-    </div>
-    </div>
 </body>
 
 </html>
