@@ -1,0 +1,137 @@
+/* Modern “Bottle‐Game.css” style */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f0f4f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: #ffffff;
+  border: 2px solid #ccd0d5;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  max-width: 800px;
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+}
+
+h1 {
+  color: #2c3e50;
+  margin-bottom: 24px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Step 1 input */
+#initialDiv input {
+  width: 80%;
+  max-width: 600px;
+  padding: 10px;
+  border: 1px solid #ccd0d5;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+#initialDiv button {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background-color: #5dade2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+#initialDiv button:hover {
+  background-color: #4a90d9;
+}
+
+/* Paragraph */
+#app p {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 700px;
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #ccd0d5;
+  border-radius: 4px;
+}
+
+/* Controls table */
+#styleTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+#styleTable th {
+  background-color: #5dade2;
+  color: #fff;
+  padding: 8px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+#styleTable td {
+  border: 1px solid #ccd0d5;
+  vertical-align: top;
+  padding: 8px;
+}
+#styleTable td label {
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+#styleTable td input[type="radio"] {
+  margin-right: 4px;
+}
+#styleTable td input[type="number"] {
+  width: 80px;
+  padding: 4px;
+  margin-left: 8px;
+  border: 1px solid #ccd0d5;
+  border-radius: 4px;
+}
+
+/* Footer buttons */
+.controls-footer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.controls-footer button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+#editBtn {
+  background-color: #5dade2;
+  color: #fff;
+}
+#editBtn:hover {
+  background-color: #4a90d9;
+}
+#resetBtn {
+  background-color: #e74c3c;
+  color: #fff;
+}
+#resetBtn:hover {
+  background-color: #d64541;
+}

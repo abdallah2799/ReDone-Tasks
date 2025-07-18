@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slide Show Game</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/Styles/stylesheet-Slide-Show.css" />
+    <script>
+        var imagesarr = [];
+        for (let index = 0; index < 11; index++) {
+            imagesarr[index] = '/photos/numbers/' + index + '.jpg'
+        }
+        var i = 0;
+        var t;
+        function start() {
+            var tInterval = +(document.getElementById('t').value) * 1000 || 1000;
+            if (!t) {
+                t = setInterval("next()", tInterval);
+            } else {
+                alert("Can't Start what's already in progress..")
+            }
+        }
+        function prev() {
+            i--;
+            if (i < 0) i = imagesarr.length - 1;
+            slide.src = imagesarr[i];
+        }
+        function next() {
+            i++;
+            if (i >= imagesarr.length) i = 0;
+            slide.src = imagesarr[i];
+        }
+        function end() {
+            if (t) {
+                clearInterval(t);
+                t = null;
+            } else {
+                alert("can't End what's never Started :'' ")
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="line"></div>
+            <h1><span>Slide Show</span> Page<h1>
+        </div>
+
+        <div class="show">
+            <img src="/photos/numbers/0.jpg" id="slide" alt="Slide image" />
+        </div>
+
+        <div class="controls">
+            <input type="button" class="direction" value="&#10094;" onclick="prev()" />
+            <input type="button" class="start" value="Play" onclick="start()" />
+            <input type="button" class="stop" value="Stop" onclick="end()" />
+            <input type="button" class="direction" value="&#10095;" onclick="next()" />
+            <input type="number" name="tInterval" id="t" placeholder="Set Interval">
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

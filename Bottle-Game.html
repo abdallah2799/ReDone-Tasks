@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bottle Game</title>
+    <link rel="stylesheet" href="/Styles/stylesheet-Bottle-Game.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Bottle Game</h1>
+            <p class="stars"><span>★</span><span>★</span><span>★</span></p>
+        </header>
+
+        <div class="panner">
+            <img src="/photos/friends.jpg" alt="Friends gathered around">
+        </div>
+
+        <div class="instruction">
+            <p id="adjustableP">Set your group size</p>
+        </div>
+
+        <div class="controls">
+            <div id="firstToShow">
+                <input type="number" id="numberOfFriends" class="numinp" placeholder="Number of people">
+                <button id="sizeBtn" class="userinput">Ok</button>
+            </div>
+
+            <div id="secondToShow" class="hidden">
+                <div id="inputContainer"></div>
+                <div class="actions">
+                    <button id="submitNames" class="userinput">Submit</button>
+                    <button id="resetBtn" class="gameoutput">Reset</button>
+                </div>
+            </div>
+
+            <div id="thirdToShow" class="hidden">
+                <h4>The players are:</h4>
+                <div>
+                    <label>
+                        Ask: <input type="text" id="player1" class="outp" readonly>
+                    </label>
+                    <label>
+                        Answer: <input type="text" id="player2" class="outp" readonly>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const sizeBtn = document.getElementById('sizeBtn');
+            const submitBtn = document.getElementById('submitNames');
+            const resetBtn = document.getElementById('resetBtn');
+            const numberInput = document.getElementById('numberOfFriends');
+            const firstDiv = document.getElementById('firstToShow');
+            const secondDiv = document.getElementById('secondToShow');
+            const thirdDiv = document.getElementById('thirdToShow');
+            const adjustableP = document.getElementById('adjustableP');
+            const inputContainer = document.getElementById('inputContainer');
+
+            let size, names = [];
+
+            sizeBtn.addEventListener('click', () => {
+                const val = numberInput.value.trim();
+                if (!val) {
+                    alert('You must set size to continue!');
+                    return;
+                }
+                if (isNaN(val) || +val < 3) {
+                    alert('Size must be a number greater than 2!');
+                    return;
+                }
+                size = +val;
+                adjustableP.textContent = `Enter ${size} friends' names`;
+                firstDiv.classList.add('hidden');
+                buildInputs(size);
+                secondDiv.style.display = 'block'
+                document.getElementById('player1').value = '';
+                document.getElementById('player2').value = '';
+            });
+
+            function buildInputs(n) {
+                inputContainer.innerHTML = '';
+                for (let i = 1; i <= n; i++) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'inp';
+                    input.id = `name${i}`;
+                    input.placeholder = `Friend ${i}`;
+                    inputContainer.appendChild(input);
+                }
+            }
+            function isString(str) {
+                for (let index = 0; index < str.split('').length; index++) {
+                    if (+str.split('')[index]) return false;
+                }
+                if (!str) return false;
+                return true;
+            }
+            function getData() {
+                const arr = [];
+                for (let i = 1; i <= size; i++) {
+                    const val = document.getElementById(`name${i}`).value.trim();
+                    if (!val || !isString(val)) return false;
+                    arr.push(val);
+                }
+                return arr;
+            }
+
+            submitBtn.addEventListener('click', () => {
+                const data = getData();
+                if (!data) {
+                    alert('Please fill all fields.');
+                    return;
+                }
+                names = data;
+                adjustableP.textContent = 'Enjoy playing! Click Submit to reshuffle.';
+                thirdDiv.style.display = 'block';
+                showRandom();
+            });
+
+            resetBtn.addEventListener('click', () => location.reload());
+
+            function showRandom() {
+                const [i, j] = getTwoDistinctIndices(names.length);
+                document.getElementById('player1').value = names[i];
+                document.getElementById('player2').value = names[j];
+            }
+
+            function getTwoDistinctIndices(len) {
+                const first = Math.floor(Math.random() * len);
+                let second = Math.floor(Math.random() * len);
+                while (second === first) {
+                    second = Math.floor(Math.random() * len);
+                }
+                return [first, second];
+            }
+        })();
+    </script>
+</body>
+
+</html>

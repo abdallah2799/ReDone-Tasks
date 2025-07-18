@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Array Operations App</title>
+  <link rel="stylesheet" href="Styles/stylesheet-Arrays-Manipulation.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Array Manipulation App</h1>
+
+    <!-- Step 1 -->
+    <div id="step1">
+      <label for="arraySize">1. Enter array size</label>
+      <input type="number" id="arraySize" min="1" placeholder="e.g. 4">
+      <button id="sizeSubmit">Next</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="step2" class="hidden">
+      <label for="arrayInput">2. Enter your array (comma-separated)</label>
+      <input type="text" id="arrayInput" placeholder="e.g. 1,2,3,4">
+      <button id="arraySubmit">Next</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="step3" class="hidden">
+      <p>3. Select operations:</p>
+      <div class="operation">
+        <input type="checkbox" id="op-a" value="a">
+        <label for="op-a">Original Array</label>
+      </div>
+      <div class="operation">
+        <input type="checkbox" id="op-b" value="b">
+        <label for="op-b">Ascending Order</label>
+      </div>
+      <div class="operation">
+        <input type="checkbox" id="op-c" value="c">
+        <label for="op-c">Descending Order</label>
+      </div>
+      <div class="operation">
+        <input type="checkbox" id="op-d" value="d">
+        <label for="op-d">Reversed Array</label>
+      </div>
+      <div class="operation">
+        <input type="checkbox" id="op-e" value="e">
+        <label for="op-e">Even Numbers Only</label>
+      </div>
+      <div class="operation">
+        <input type="checkbox" id="op-f" value="f">
+        <label for="op-f">Divisible by Number</label>
+        <input type="number" id="divisor" class="divisor-input" placeholder="×" min="1" disabled>
+      </div>
+      <div class="operation">
+        <input type="checkbox" id="op-g" value="g">
+        <label for="op-g">30% Discount</label>
+      </div>
+      <div class="operation">
+        <input type="checkbox" id="op-h" value="h">
+        <label for="op-h">Concatenate with "***"</label>
+      </div>
+      <button id="opsSubmit">Apply</button>
+    </div>
+
+    <!-- Step 4: Results -->
+    <div id="results"></div>
+    <button id="resetBtn" class="hidden">Start Over</button>
+  </div>
+
+  <script>
+    let chosenSize = 0;
+    let originalArray = [];
+
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const resultsDiv = document.getElementById('results');
+    const resetBtn = document.getElementById('resetBtn');
+    const divisorInput = document.getElementById('divisor');
+    const opF = document.getElementById('op-f');
+
+    const opLabels = {
+      a: 'Original Array',
+      b: 'Ascending Order',
+      c: 'Descending Order',
+      d: 'Reversed Array',
+      e: 'Even Numbers Only',
+      f: 'Divisible by Number',
+      g: '30% Discount',
+      h: 'Concatenated with "***"'
+    };
+
+    function show(el) { el.classList.remove('hidden'); }
+    function hide(el) { el.classList.add('hidden'); }
+
+    // Enable divisor input when 'f' is checked
+    opF.addEventListener('change', () => {
+      divisorInput.disabled = !opF.checked;
+      if (!opF.checked) divisorInput.value = '';
+    });
+
+    // Step 1
+    document.getElementById('sizeSubmit').onclick = () => {
+      const val = +document.getElementById('arraySize').value;
+      if (!val || val < 1) {
+        alert('Enter a positive number for size.');
+        return;
+      }
+      chosenSize = val;
+      hide(step1);
+      show(step2);
+    };
+
+    // Step 2
+    document.getElementById('arraySubmit').onclick = () => {
+      const txt = document.getElementById('arrayInput').value.trim();
+      const parts = txt.split(',');
+      if (parts.length !== chosenSize) {
+        alert(`Array must have exactly ${chosenSize} items.`);
+        return;
+      }
+      if (parts.some(x => x === '' || isNaN(+x))) {
+        alert('Enter only numbers, comma-separated.');
+        return;
+      }
+      originalArray = parts.map(Number);
+      hide(step2);
+      show(step3);
+    };
+
+    // Step 3 & 4
+    document.getElementById('opsSubmit').onclick = () => {
+      const selected = [
+        ...step3.querySelectorAll('input[type="checkbox"]:checked')
+      ].map(cb => cb.value);
+
+      if (selected.length === 0) {
+        alert('Select at least one operation.');
+        return;
+      }
+
+      // If 'f' is selected, validate divisor
+      if (selected.includes('f')) {
+        const d = +divisorInput.value;
+        if (!d || d < 1) {
+          alert('Enter a positive number for divisor.');
+          return;
+        }
+      }
+
+      resultsDiv.innerHTML = '';
+      selected.forEach(op => {
+        let result;
+        switch (op) {
+          case 'a':
+            result = [...originalArray];
+            break;
+          case 'b':
+            result = [...originalArray].sort((x,y)=>x-y);
+            break;
+          case 'c':
+            result = [...originalArray].sort((x,y)=>y-x);
+            break;
+          case 'd':
+            result = [...originalArray].reverse();
+            break;
+          case 'e':
+            result = originalArray.filter(n=>n%2===0);
+            break;
+          case 'f':
+            const div = +divisorInput.value;
+            result = originalArray.filter(n=>n%div===0);
+            break;
+          case 'g':
+            result = originalArray.map(n=>+(n*0.7).toFixed(2));
+            break;
+          case 'h':
+            result = originalArray.join('***');
+            break;
+        }
+
+        const row = document.createElement('div');
+        row.className = 'result';
+        const lbl = document.createElement('label');
+        lbl.textContent = opLabels[op] + ':';
+        const out = document.createElement('input');
+        out.type = 'text';
+        out.readOnly = true;
+        out.value = Array.isArray(result) ? `[${result}]` : result;
+        row.append(lbl, out);
+        resultsDiv.appendChild(row);
+      });
+
+      show(resetBtn);
+    };
+
+    // Reset
+    resetBtn.onclick = () => location.reload();
+  </script>
+</body>
+</html>

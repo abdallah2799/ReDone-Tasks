@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Text Manipulation App</title>
+    <link rel="stylesheet" href="Styles/stylesheet-TextManipulation.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Text Manipulation App</h1>
+
+        <!-- 1) Enter text -->
+        <div id="initialDiv">
+            <input type="text" id="textInput" placeholder="Enter your text or paragraph" />
+            <button id="textSubmit">Submit</button>
+        </div>
+
+        <!-- 2) Controls -->
+        <div id="app" class="hidden">
+            <p id="paragraph"></p>
+
+            <table id="styleTable">
+                <tr>
+                    <th>Property</th>
+                    <th>Control</th>
+                </tr>
+
+                <!-- Font Family -->
+                <tr>
+                    <td>Font Family</td>
+                    <td>
+                        <label><input type="radio" name="fontFamily" value="Arial"> Arial</label>
+                        <label><input type="radio" name="fontFamily" value="Verdana"> Verdana</label>
+                        <label><input type="radio" name="fontFamily" value="Tahoma"> Tahoma</label>
+                        <label><input type="radio" name="fontFamily" value="Georgia"> Georgia</label>
+                        <label><input type="radio" name="fontFamily" value="Garamond"> Garamond</label>
+                        <label><input type="radio" name="fontFamily" value="Impact"> Impact</label>
+                        <label><input type="radio" name="fontFamily" value='"Courier New", Courier, monospace'> Courier
+                            New</label>
+                        <label><input type="radio" name="fontFamily" value='"Lucida Console", Monaco, monospace'> Lucida
+                            Console</label>
+                        <label><input type="radio" name="fontFamily" value='"Comic Sans MS", cursive, sans-serif'> Comic
+                            Sans MS</label>
+                        <label><input type="radio" name="fontFamily" value='"Times New Roman", Times, serif'> Times New
+                            Roman</label>
+                        <label><input type="radio" name="fontFamily" value='"Palatino", "Palatino Linotype", serif'>
+                            Palatino</label>
+                    </td>
+                </tr>
+
+                <!-- Font Size -->
+                <tr>
+                    <td>Font Size (px)</td>
+                    <td>
+                        <input type="number" id="fontSizeInput" placeholder="px" min="1">
+                    </td>
+                </tr>
+
+                <!-- Line Height -->
+                <tr>
+                    <td>Line Height</td>
+                    <td>
+                        <input type="number" id="lineHeightInput" placeholder="1.2" step="0.1" min="0.5">
+                    </td>
+                </tr>
+
+                <!-- Letter Spacing -->
+                <tr>
+                    <td>Letter Spacing (px)</td>
+                    <td>
+                        <input type="number" id="letterSpacingInput" placeholder="px" step="0.5">
+                    </td>
+                </tr>
+
+                <!-- Text Indent -->
+                <tr>
+                    <td>Text Indent (px)</td>
+                    <td>
+                        <input type="number" id="textIndentInput" placeholder="px" min="0">
+                    </td>
+                </tr>
+
+                <!-- Text Align -->
+                <tr>
+                    <td>Text Align</td>
+                    <td>
+                        <label><input type="radio" name="textAlign" value="left"> left</label>
+                        <label><input type="radio" name="textAlign" value="center"> center</label>
+                        <label><input type="radio" name="textAlign" value="right"> right</label>
+                        <label><input type="radio" name="textAlign" value="justify"> justify</label>
+                    </td>
+                </tr>
+
+                <!-- Text Transform -->
+                <tr>
+                    <td>Text Transform</td>
+                    <td>
+                        <label><input type="radio" name="textTransform" value="none"> none</label>
+                        <label><input type="radio" name="textTransform" value="uppercase"> uppercase</label>
+                        <label><input type="radio" name="textTransform" value="lowercase"> lowercase</label>
+                        <label><input type="radio" name="textTransform" value="capitalize"> capitalize</label>
+                    </td>
+                </tr>
+
+                <!-- Text Decoration -->
+                <tr>
+                    <td>Text Decoration</td>
+                    <td>
+                        <label><input type="radio" name="textDecoration" value="none"> none</label>
+                        <label><input type="radio" name="textDecoration" value="underline"> underline</label>
+                        <label><input type="radio" name="textDecoration" value="line-through"> line-through</label>
+                        <label><input type="radio" name="textDecoration" value="overline"> overline</label>
+                    </td>
+                </tr>
+
+                <!-- Border Style (all valid values) -->
+                <tr>
+                    <td>Border Style</td>
+                    <td>
+                        <label><input type="radio" name="borderStyle" value="none"> none</label>
+                        <label><input type="radio" name="borderStyle" value="hidden"> hidden</label>
+                        <label><input type="radio" name="borderStyle" value="dotted"> dotted</label>
+                        <label><input type="radio" name="borderStyle" value="dashed"> dashed</label>
+                        <label><input type="radio" name="borderStyle" value="solid"> solid</label>
+                        <label><input type="radio" name="borderStyle" value="double"> double</label>
+                        <label><input type="radio" name="borderStyle" value="groove"> groove</label>
+                        <label><input type="radio" name="borderStyle" value="ridge"> ridge</label>
+                        <label><input type="radio" name="borderStyle" value="inset"> inset</label>
+                        <label><input type="radio" name="borderStyle" value="outset"> outset</label>
+                    </td>
+                </tr>
+
+                <!-- Border Width -->
+                <tr>
+                    <td>Border Width (px)</td>
+                    <td>
+                        <label>
+                            <input type="checkbox" id="borderWidthNoneBox">
+                            none
+                        </label>
+                        <input type="number" id="borderWidthInput" placeholder="px" min="1">
+                    </td>
+                </tr>
+
+                <!-- Border Color -->
+                <tr>
+                    <td>Border Color</td>
+                    <td>
+                        <label><input type="radio" name="borderColor" value="none"> none</label>
+                        <label><input type="radio" name="borderColor" value="black"> black</label>
+                        <label><input type="radio" name="borderColor" value="red"> red</label>
+                        <label><input type="radio" name="borderColor" value="green"> green</label>
+                        <label><input type="radio" name="borderColor" value="blue"> blue</label>
+                    </td>
+                </tr>
+
+                <!-- Background Color -->
+                <tr>
+                    <td>Background Color</td>
+                    <td>
+                        <label><input type="radio" name="backgroundColor" value="transparent"> none</label>
+                        <label><input type="radio" name="backgroundColor" value="yellow"> yellow</label>
+                        <label><input type="radio" name="backgroundColor" value="lightblue"> lightblue</label>
+                        <label><input type="radio" name="backgroundColor" value="lightgreen"> lightgreen</label>
+                        <label><input type="radio" name="backgroundColor" value="pink"> pink</label>
+                    </td>
+                </tr>
+
+                <!-- Text Shadow -->
+                <tr>
+                    <td>Text Shadow</td>
+                    <td>
+                        <label><input type="radio" name="textShadow" value="none"> none</label>
+                        <label><input type="radio" name="textShadow" value="1px 1px #333"> small</label>
+                        <label><input type="radio" name="textShadow" value="2px 2px #666"> medium</label>
+                        <label><input type="radio" name="textShadow" value="3px 3px #999"> large</label>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="controls-footer">
+                <button id="editBtn">Enter Another Text</button>
+                <button id="resetBtn">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const initialDiv = document.getElementById("initialDiv");
+            const textInput = document.getElementById("textInput");
+            const textSubmit = document.getElementById("textSubmit");
+            const app = document.getElementById("app");
+            const paragraph = document.getElementById("paragraph");
+            const styleTable = document.getElementById("styleTable");
+            const editBtn = document.getElementById("editBtn");
+            const resetBtn = document.getElementById("resetBtn");
+            const borderWidthBox = document.getElementById("borderWidthNoneBox");
+            const borderWidthInput = document.getElementById("borderWidthInput");
+
+            // 1) Enter text
+            textSubmit.addEventListener("click", () => {
+                const txt = textInput.value.trim();
+                if (!txt) {
+                    alert("Please enter some text first.");
+                    return;
+                }
+                paragraph.textContent = txt;
+                initialDiv.classList.add("hidden");
+                app.classList.remove("hidden");
+            });
+
+            // 2) Re‐enter text
+            editBtn.addEventListener("click", () => {
+                app.classList.add("hidden");
+                initialDiv.classList.remove("hidden");
+            });
+
+            // 3) Reset
+            resetBtn.addEventListener("click", () => location.reload());
+
+            // 4) Delegate radios
+            styleTable.addEventListener("change", e => {
+                const inp = e.target;
+                if (inp.tagName !== "INPUT" || inp.type !== "radio") return;
+                const prop = inp.name;
+                const val = inp.value;
+                paragraph.style[prop] = val;
+            });
+
+            // 5) Numeric inputs validation
+            const numericControls = [
+                { el: "fontSizeInput", prop: "fontSize", min: 1, suffix: "px", err: "Font size ≥1px" },
+                { el: "lineHeightInput", prop: "lineHeight", min: 0.1, suffix: "", err: "Line height >0" },
+                { el: "letterSpacingInput", prop: "letterSpacing", min: 0, suffix: "px", err: "Letter spacing ≥0px" },
+                { el: "textIndentInput", prop: "textIndent", min: 0, suffix: "px", err: "Text indent ≥0px" }
+            ];
+
+            numericControls.forEach(cfg => {
+                const node = document.getElementById(cfg.el);
+                node.addEventListener("input", () => {
+                    const v = parseFloat(node.value);
+                    if (isNaN(v) || v < cfg.min) {
+                        alert(cfg.err);
+                        node.value = "";
+                        return;
+                    }
+                    paragraph.style[cfg.prop] = v + cfg.suffix;
+                });
+            });
+
+            // 6) Border width checkbox logic
+            borderWidthBox.addEventListener("change", () => {
+                if (borderWidthBox.checked) {
+                    borderWidthInput.value = "";
+                    borderWidthInput.disabled = true;
+                    paragraph.style.borderWidth = "0px";
+                } else {
+                    borderWidthInput.disabled = false;
+                }
+            });
+
+            borderWidthInput.addEventListener("input", () => {
+                const v = parseInt(borderWidthInput.value, 10);
+                if (isNaN(v) || v < 1) {
+                    alert("Border width must be at least 1px or check 'none'.");
+                    borderWidthInput.value = "";
+                    return;
+                }
+                borderWidthBox.checked = false;
+                paragraph.style.borderWidth = v + "px";
+            });
+        });
+    </script>
+</body>
+
+</html>

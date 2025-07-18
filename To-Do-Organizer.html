@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>To Do Organizer</title>
+  <link rel="stylesheet" href="Styles/stylesheet-ToDoOrganizer.css">
+</head>
+<body>
+  <div class="container">
+    <h1>To Do Organizer</h1>
+
+    <div class="addTasks">
+      <input type="text" id="tasks" placeholder="Enter Task Name">
+      <button id="addBtn">Add</button>
+    </div>
+
+    <table id="tasksTable">
+      <tr id="headerRow">
+        <th>Done</th>
+        <th>Task</th>
+        <th>Delete</th>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let doneColId = 1, delColId = 1;
+      const tasksInput = document.getElementById('tasks');
+      const addBtn     = document.getElementById('addBtn');
+      const tasksTable = document.getElementById('tasksTable');
+      const headerRow  = document.getElementById('headerRow');
+      const resetBtn   = document.getElementById('resetBtn');
+
+      addBtn.addEventListener('click', addNewRow);
+      tasksTable.addEventListener('click', handleTableClick);
+      resetBtn.addEventListener('click', () => location.reload());
+
+      function handleTableClick(e) {
+        if (e.target.matches('input[name="done"]')) {
+          toggleDone(e.target);
+        } else if (e.target.matches('img.delete-icon')) {
+          deleteRow(e.target);
+        }
+      }
+
+      function createDoneCell() {
+        const td = document.createElement('td');
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.name = 'done';
+        cb.id   = 'box' + doneColId++;
+        td.appendChild(cb);
+        return td;
+      }
+
+      function createTaskCell(text) {
+        const td = document.createElement('td');
+        td.textContent = text;
+        return td;
+      }
+
+      function createDeleteCell() {
+        const td  = document.createElement('td');
+        const img = document.createElement('img');
+        img.src       = '/photos/delete.png';
+        img.className = 'delete-icon';
+        img.id        = 'img' + delColId++;
+        td.appendChild(img);
+        return td;
+      }
+
+      function addNewRow() {
+        const task = tasksInput.value.trim();
+        if (!task) {
+          alert("Can't add a Task without Title");
+          return;
+        }
+
+        // Duplicate check
+        const existingRows = tasksTable.querySelectorAll('tr:not(#headerRow)');
+        for (const row of existingRows) {
+          const text = row.children[1].textContent;
+          if (text === task) {
+            const doneState = row.querySelector('input[name="done"]').checked
+                              ? 'done' : 'not done';
+            alert(`Task "${task}" already exists and is marked ${doneState}.`);
+            return;
+          }
+        }
+
+        const doneCol   = createDoneCell();
+        const taskCol   = createTaskCell(task);
+        const deleteCol = createDeleteCell();
+        const newRow    = document.createElement('tr');
+
+        newRow.append(doneCol, taskCol, deleteCol);
+        headerRow.insertAdjacentElement('afterend', newRow);
+        tasksInput.value = '';
+        stripeRows();
+      }
+
+      function toggleDone(cb) {
+        const tr       = cb.closest('tr');
+        const taskCell = tr.children[1];
+
+        if (cb.checked) {
+          taskCell.style.textDecoration = 'line-through';
+          tasksTable.appendChild(tr);
+        } else {
+          taskCell.style.textDecoration = 'none';
+          headerRow.insertAdjacentElement('afterend', tr);
+        }
+
+        stripeRows();
+      }
+
+      function deleteRow(img) {
+        const tr   = img.closest('tr');
+        const txt  = tr.children[1].textContent;
+        if (confirm(`Are You Sure You Want To Delete Task: ( ${txt} ) ?`)) {
+          tr.remove();
+          stripeRows();
+        }
+      }
+
+      function stripeRows() {
+        const rows = Array.from(
+          tasksTable.querySelectorAll('tr:not(#headerRow)')
+        );
+        rows.forEach((row, i) => {
+          row.classList.remove('row-even', 'row-odd');
+          row.classList.add(i % 2 === 0 ? 'row-even' : 'row-odd');
+        });
+
+        // Show reset button once there's at least one task
+        if (rows.length > 0) {
+          resetBtn.classList.remove('hidden');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
